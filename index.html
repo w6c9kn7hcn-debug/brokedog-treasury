@@ -1,0 +1,251 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrokeDog Treasury Dashboard</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body{
+    background:#0f172a;
+    color:white;
+}
+.card{
+    background:#1e293b;
+    border:1px solid #334155;
+}
+</style>
+</head>
+
+<body>
+
+<div class="max-w-7xl mx-auto p-6">
+
+    <div class="text-center mb-10">
+        <h1 class="text-5xl font-bold mb-4">
+            🐕 BrokeDog Treasury Dashboard
+        </h1>
+        <p class="text-slate-400">
+            Public Buyback & Burn Transparency Portal
+        </p>
+    </div>
+
+    <!-- Stats -->
+
+    <div class="grid md:grid-cols-5 gap-4 mb-8">
+
+        <div class="card rounded-xl p-5">
+            <p class="text-slate-400">Treasury Balance</p>
+            <h2 id="treasuryBalance" class="text-3xl font-bold">
+                Loading...
+            </h2>
+        </div>
+
+        <div class="card rounded-xl p-5">
+            <p class="text-slate-400">Buybacks</p>
+            <h2 id="buybacks" class="text-3xl font-bold">
+                Loading...
+            </h2>
+        </div>
+
+        <div class="card rounded-xl p-5">
+            <p class="text-slate-400">Tokens Burned</p>
+            <h2 id="burned" class="text-3xl font-bold">
+                Loading...
+            </h2>
+        </div>
+
+        <div class="card rounded-xl p-5">
+            <p class="text-slate-400">Circulating Supply</p>
+            <h2 id="supply" class="text-3xl font-bold">
+                Loading...
+            </h2>
+        </div>
+
+        <div class="card rounded-xl p-5">
+            <p class="text-slate-400">SOL Balance</p>
+            <h2 id="solBalance" class="text-3xl font-bold">
+                Loading...
+            </h2>
+        </div>
+
+    </div>
+
+    <!-- Wallet -->
+
+    <div class="card rounded-xl p-6 mb-8">
+        <h2 class="text-2xl font-bold mb-4">
+            Treasury Wallet
+        </h2>
+
+        <div class="flex flex-wrap gap-3 items-center">
+
+            <code id="walletAddress">
+                YOUR_SOLANA_TREASURY_WALLET
+            </code>
+
+            <a
+                id="walletLink"
+                href="#"
+                target="_blank"
+                class="bg-blue-600 px-4 py-2 rounded-lg"
+            >
+                View on Solscan
+            </a>
+
+        </div>
+    </div>
+
+    <!-- Burn Transactions -->
+
+    <div class="card rounded-xl p-6 mb-8">
+
+        <h2 class="text-2xl font-bold mb-4">
+            Burn Transactions
+        </h2>
+
+        <div class="overflow-x-auto">
+
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b border-slate-700">
+                        <th class="text-left p-3">Date</th>
+                        <th class="text-left p-3">Tokens Burned</th>
+                        <th class="text-left p-3">Transaction</th>
+                    </tr>
+                </thead>
+
+                <tbody id="burnTable">
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- Buyback History -->
+
+    <div class="card rounded-xl p-6">
+
+        <h2 class="text-2xl font-bold mb-4">
+            Buyback History
+        </h2>
+
+        <div id="buybackHistory">
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+// CONFIG
+
+const TREASURY_WALLET =
+"YOUR_SOLANA_TREASURY_WALLET";
+
+document.getElementById("walletAddress").textContent =
+TREASURY_WALLET;
+
+document.getElementById("walletLink").href =
+`https://solscan.io/account/${TREASURY_WALLET}`;
+
+// DEMO DATA
+
+const dashboardData = {
+    treasuryBalance:"$125,430",
+    buybacks:14,
+    burned:"27,450,000",
+    circulatingSupply:"972,550,000",
+    solBalance:"512.45",
+    burns:[
+        {
+            date:"2026-09-27",
+            amount:"2,450,000",
+            tx:"5sBurnExampleTxHash1"
+        },
+        {
+            date:"2026-09-20",
+            amount:"1,890,000",
+            tx:"5sBurnExampleTxHash2"
+        },
+        {
+            date:"2026-09-14",
+            amount:"3,120,000",
+            tx:"5sBurnExampleTxHash3"
+        }
+    ]
+};
+
+// LOAD STATS
+
+document.getElementById("treasuryBalance").innerText =
+dashboardData.treasuryBalance;
+
+document.getElementById("buybacks").innerText =
+dashboardData.buybacks;
+
+document.getElementById("burned").innerText =
+dashboardData.burned;
+
+document.getElementById("supply").innerText =
+dashboardData.circulatingSupply;
+
+document.getElementById("solBalance").innerText =
+dashboardData.solBalance;
+
+// LOAD BURNS
+
+const burnTable =
+document.getElementById("burnTable");
+
+dashboardData.burns.forEach(burn => {
+
+    burnTable.innerHTML += `
+    <tr class="border-b border-slate-700">
+        <td class="p-3">${burn.date}</td>
+        <td class="p-3">${burn.amount}</td>
+        <td class="p-3">
+            <a
+             href="https://solscan.io/tx/${burn.tx}"
+             target="_blank"
+             class="text-blue-400"
+            >
+             View Burn
+            </a>
+        </td>
+    </tr>
+    `;
+});
+
+// BUYBACK LIST
+
+document.getElementById("buybackHistory").innerHTML = `
+<div class="space-y-3">
+
+<div class="card p-4 rounded-lg">
+🔥 Buyback #14 - 25 SOL
+</div>
+
+<div class="card p-4 rounded-lg">
+🔥 Buyback #13 - 18 SOL
+</div>
+
+<div class="card p-4 rounded-lg">
+🔥 Buyback #12 - 30 SOL
+</div>
+
+</div>
+`;
+
+</script>
+
+</body>
+</html>
+```
