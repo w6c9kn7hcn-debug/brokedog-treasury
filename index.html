@@ -84,7 +84,8 @@ body{
         <div class="flex flex-wrap gap-3 items-center">
 
             <code id="walletAddress">
-                YOUR_SOLANA_TREASURY_WALLET
+                HxPv56sFAa258fx7noioQkNPpipLC3xGpCw8Jr9rFULV
+
             </code>
 
             <a
@@ -165,21 +166,7 @@ const dashboardData = {
     circulatingSupply:"0",
     solBalance:"0",
     burns:[
-        {
-            date:"0",
-            amount:"0",
-            tx:"5sBurnExampleTxHash1"
-        },
-        {
-            date:"0",
-            amount:"0",
-            tx:"5sBurnExampleTxHash2"
-        },
-        {
-            date:"0",
-            amount:"0",
-            tx:"5sBurnExampleTxHash3"
-        }
+        {        }
     ]
 };
 
@@ -229,17 +216,7 @@ dashboardData.burns.forEach(burn => {
 document.getElementById("buybackHistory").innerHTML = `
 <div class="space-y-3">
 
-<div class="card p-4 rounded-lg">
-🔥 Buyback #0 - 0 SOL
-</div>
 
-<div class="card p-4 rounded-lg">
-🔥 Buyback #0 - 0 SOL
-</div>
-
-<div class="card p-4 rounded-lg">
-🔥 Buyback #0 - 0 SOL
-</div>
 
 </div>
 `;
